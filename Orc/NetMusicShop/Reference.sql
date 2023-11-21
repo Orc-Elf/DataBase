@@ -20,25 +20,44 @@ GROUP BY Albums.AlbumID, Albums.AlbumName
 ORDER BY TotalSales DESC;
 
 
-SELECT *
-FROM Songs
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM Collections
-    WHERE Songs.SongID = Collections.SongID
-);
+select sales.AlbumID, albums.AlbumName, sales.TotalPrice
+from albums,sales
+where sales.AlbumID = albums.AlbumID
+order by TotalPrice desc ;
 
 SELECT *
 FROM Songs
 WHERE SongID NOT IN (SELECT SongID FROM Collections);
 
 
-SELECT Users.UserName, SUM(Sales.Quantity) AS TotalQuantity
-FROM Users
-         INNER JOIN Orders ON Users.UserName = Orders.UserName
-         INNER JOIN Sales ON Orders.OrderID = Sales.OrderID
-         INNER JOIN Albums ON Sales.AlbumID = Albums.AlbumID
-WHERE Albums.AlbumSinger = '刘欢'
-GROUP BY Users.UserName
-ORDER BY TotalQuantity DESC
-LIMIT 1;
+SELECT s.SongID, s.SongTitle
+FROM Songs s
+WHERE NOT EXISTS (
+    SELECT u.UserName
+    FROM Users u
+    WHERE NOT EXISTS (
+        SELECT c.SongID
+        FROM Collections c
+        WHERE c.UserName = u.UserName AND c.SongID = s.SongID
+    )
+);
+
+SELECT s.SongID, s.SongTitle
+FROM Songs s
+         JOIN Collections c ON s.SongID = c.SongID
+GROUP BY s.SongID, s.SongTitle
+HAVING COUNT(DISTINCT c.UserName) = (SELECT COUNT(*) FROM Users);
+
+
+SELECT u.UserName
+FROM Users u
+WHERE NOT EXISTS (
+    SELECT c.UserName
+    FROM Collections c
+    WHERE c.UserName = u.UserName
+);
+
+SELECT u.UserName
+FROM Users u
+         LEFT JOIN Collections c ON u.UserName = c.UserName
+WHERE c.SongID IS NULL;
