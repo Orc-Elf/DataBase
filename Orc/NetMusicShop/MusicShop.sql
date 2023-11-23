@@ -72,7 +72,7 @@ INSERT INTO Collections VALUES(15,'小龙女','2018-05-01');
 INSERT INTO Collections VALUES(15,'郭大侠','2019-05-01');
 INSERT INTO Users(UserName,UserPassword,UserSex,UserRealName,UserAgeRange,UserAddress,UserPostCode,UserPhone,UserEmail)
 VALUES('喆King','666','女','sj','无可奉告','北京市 朝阳区','100024','13600088855','woshinvtong@cuc.edu.cn');
-
+INSERT INTO Collections VALUES(15,'喆King','2020-05-01');
 
 -- 查找被所有用户收藏的歌曲（两种实现方式：相关嵌套查询、不相关嵌套查询）
 
