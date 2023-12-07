@@ -2,8 +2,7 @@
 
 ## 创建电影数据库
 #### 代码如下：
-```SQL```
-```
+```SQL
 create table Artist(
 ID int auto_increment not null primary key ,
 name varchar(50) NULL ,
