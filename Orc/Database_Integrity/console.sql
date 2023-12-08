@@ -51,7 +51,7 @@ END&&
 delimiter ;
 
 -- test
-insert into teacher(t_name, job, salary) VALUES ('Test Professor', '教授', 3000);
+insert into teacher(t_name, job, salary) VALUES ('Test', '教授', 3000);
 
 
 delimiter $$
@@ -70,6 +70,7 @@ set job = 'joker'
 where tno = 1;
 
 
+-- 创建表sal_log
 create table sal_log(
     id int auto_increment primary key ,
     tno int ,
@@ -85,6 +86,8 @@ begin
 end &&
 delimiter ;
 
+insert into teacher(t_name, job, salary) VALUES ('Test', '教授', 3000);
+
 delimiter &&
 create trigger after_Sal_update after update on teacher for each row
 begin
@@ -93,5 +96,9 @@ begin
     end if;
 end &&
 delimiter ;
+
+update teacher
+set salary = 10000
+where tno = 2;
 
 
